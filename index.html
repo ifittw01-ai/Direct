@@ -480,12 +480,12 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="country"><span data-i18n="form-country">國家/地區</span> <span class="required">*</span></label>
-                                <select id="country" name="國家地區" required>
-                                    <option value="" selected data-i18n="form-country-placeholder">請選擇...</option>
-                                    <option value="TW" data-i18n="form-country-tw">台灣 Taiwan</option>
-                                    <option value="MY" data-i18n="form-country-my">馬來西亞 Malaysia (Kuala Lumpur)</option>
-                                </select>
+                                <label id="country-label"><span data-i18n="form-country">國家/地區</span> <span class="required">*</span></label>
+                                <input type="hidden" id="country" name="國家地區" value="台灣 Taiwan" data-code="TW" required>
+                                <div class="option-cards option-cards--country" id="countryCards" role="radiogroup" aria-labelledby="country-label">
+                                    <button type="button" class="option-card selected" data-value="TW" data-i18n="form-country-tw" aria-pressed="true">台灣 Taiwan</button>
+                                    <button type="button" class="option-card" data-value="MY" data-i18n="form-country-my">馬來西亞 Malaysia (Kuala Lumpur)</button>
+                                </div>
                             </div>
                             
                             <div class="form-group">
@@ -506,11 +506,11 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="region"><span data-i18n="form-region">希望評估時間地點</span> <span class="required">*</span></label>
-                                <select id="region" name="評估地區" required>
-                                    <option value="" data-i18n="form-region-loading">載入中...</option>
-                                    <!-- 選項將從 Google Sheet 動態載入 -->
-                                </select>
+                                <label id="region-label"><span data-i18n="form-region">希望評估時間地點</span> <span class="required">*</span></label>
+                                <input type="hidden" id="region" name="評估地區" required>
+                                <div class="option-cards option-cards--region" id="regionCards" role="radiogroup" aria-labelledby="region-label">
+                                    <p class="option-cards-placeholder" data-i18n="form-region-loading">載入中...</p>
+                                </div>
                                 <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;" data-i18n="form-region-hint">
                                     💡 地點由系統自動更新
                                 </small>

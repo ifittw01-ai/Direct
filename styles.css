@@ -1537,6 +1537,66 @@ section {
     color: #aaa;
 }
 
+/* 卡片式選項（國家 / 評估地點） */
+.option-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.option-cards--country {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 420px) {
+    .option-cards--country {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.option-card {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: var(--white);
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    color: var(--text-dark);
+}
+
+.option-card:hover {
+    border-color: #667eea;
+}
+
+.option-card.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.08));
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    font-weight: 600;
+}
+
+.option-cards.is-disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.option-cards-placeholder {
+    color: #999;
+    font-size: 0.9rem;
+    padding: 10px 2px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.option-cards--region .option-card {
+    text-align: left;
+}
+
 /* 付款方式 */
 .payment-methods {
     display: flex;
