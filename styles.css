@@ -1537,6 +1537,11 @@ section {
     color: #aaa;
 }
 
+/* 隱藏欄位（行業、WhatsApp 等） */
+.form-field-hidden {
+    display: none !important;
+}
+
 /* 卡片式選項（國家 / 評估地點） */
 .option-cards {
     display: grid;
