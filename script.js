@@ -502,9 +502,15 @@ function initOrderForm() {
     const form = document.getElementById('orderForm');
     const submitBtn = document.getElementById('submitBtn');
     
+    updateSubmitButtonState();
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        if (!validateOrderFormSelections()) {
+            return;
+        }
+
         // 驗證表單
         if (!form.checkValidity()) {
             form.reportValidity();
@@ -535,8 +541,11 @@ function initOrderForm() {
             formData.set('行業', industryText);
         }
         
-        // 國家 / 評估地區（卡片選取，hidden 已含顯示文字）
-        const userRegion = document.getElementById('region')?.value || '';
+        // 國家 / 評估地區（卡片選取，明確寫入 FormData）
+        const countryValue = document.getElementById('country')?.value?.trim() || '';
+        const userRegion = document.getElementById('region')?.value?.trim() || '';
+        formData.set('國家地區', countryValue);
+        formData.set('評估地區', userRegion);
         
         // 添加推廣代碼
         if (refCode) {
@@ -567,7 +576,7 @@ function initOrderForm() {
                 
                 // 顯示成功頁面
                 showSuccessPage(userName, userRegion);
-                form.reset();
+                resetOrderFormAfterSubmit();
             } else {
                 console.error('❌ 提交失敗:', result.message);
                 alert('❌ 提交失敗，請稍後再試或直接聯繫我們的 WhatsApp/LINE\n\n錯誤: ' + result.message);
@@ -576,9 +585,8 @@ function initOrderForm() {
             console.error('⚠️ 提交錯誤:', error);
             alert('❌ 網路錯誤，請檢查網路連接後重試');
         } finally {
-            // 恢復按鈕狀態
-            submitBtn.disabled = false;
             submitBtn.innerHTML = '<span>📝 提交資料</span>';
+            updateSubmitButtonState();
         }
     });
 }
@@ -693,6 +701,59 @@ document.addEventListener('visibilitychange', () => {
 // ========================================
 // 卡片式選項輔助
 // ========================================
+let regionsLoading = false;
+
+function updateSubmitButtonState() {
+    const submitBtn = document.getElementById('submitBtn');
+    const countryHidden = document.getElementById('country');
+    const regionHidden = document.getElementById('region');
+    if (!submitBtn) return;
+
+    const canSubmit = !regionsLoading
+        && Boolean(countryHidden?.value?.trim())
+        && Boolean(regionHidden?.value?.trim());
+
+    submitBtn.disabled = !canSubmit;
+}
+
+function validateOrderFormSelections() {
+    const countryHidden = document.getElementById('country');
+    const regionHidden = document.getElementById('region');
+    const regionCards = document.getElementById('regionCards');
+
+    if (!countryHidden?.value?.trim()) {
+        alert('請選擇國家/地區');
+        return false;
+    }
+    if (regionsLoading) {
+        alert('評估地點載入中，請稍候再提交');
+        return false;
+    }
+    if (!regionHidden?.value?.trim()) {
+        regionCards?.classList.add('option-cards--error');
+        regionCards?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        alert('請選擇希望評估的時間地點');
+        return false;
+    }
+
+    regionCards?.classList.remove('option-cards--error');
+    return true;
+}
+
+function resetOrderFormAfterSubmit() {
+    const form = document.getElementById('orderForm');
+    const regionCards = document.getElementById('regionCards');
+
+    form?.reset();
+    regionCards?.classList.remove('option-cards--error');
+    regionCards?.querySelectorAll('.option-card').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-pressed', 'false');
+    });
+
+    selectCountry('TW');
+}
+
 function getFormI18n(key, fallback = '') {
     const lang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'zh-TW';
     const dict = typeof translations !== 'undefined' ? (translations[lang] || translations['zh-TW']) : {};
@@ -717,28 +778,48 @@ function showRegionPlaceholder(messageKey, fallback) {
     container.innerHTML = `<p class="option-cards-placeholder" data-i18n="${messageKey}">${getFormI18n(messageKey, fallback)}</p>`;
 }
 
+function selectRegionCard(btn) {
+    const container = document.getElementById('regionCards');
+    const hidden = document.getElementById('region');
+    if (!btn || !container || !hidden) return;
+
+    const regionText = btn.textContent.trim();
+    if (!regionText) return;
+
+    hidden.value = regionText;
+    setCardSelection(container, btn);
+    container.classList.remove('option-cards--error');
+    updateSubmitButtonState();
+}
+
 function renderRegionCards(regions) {
     const container = document.getElementById('regionCards');
     const hidden = document.getElementById('region');
     if (!container || !hidden) return;
 
     hidden.value = '';
-    container.classList.remove('is-disabled');
+    container.classList.remove('is-disabled', 'option-cards--error');
     container.innerHTML = '';
 
-    regions.forEach(region => {
+    const validRegions = regions.filter(region => region.text && String(region.text).trim());
+
+    validRegions.forEach(region => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'option-card';
         btn.dataset.value = region.id;
         btn.textContent = region.text;
         btn.setAttribute('aria-pressed', 'false');
-        btn.addEventListener('click', () => {
-            hidden.value = region.text;
-            setCardSelection(container, btn);
-        });
+        btn.addEventListener('click', () => selectRegionCard(btn));
         container.appendChild(btn);
     });
+
+    if (validRegions.length === 1) {
+        const firstBtn = container.querySelector('.option-card');
+        selectRegionCard(firstBtn);
+    } else {
+        updateSubmitButtonState();
+    }
 }
 
 function getDefaultRegions(country) {
@@ -759,6 +840,8 @@ async function loadRegionOptions(country = 'TW') {
     }
 
     console.log('📍 正在載入評估地點...（國家: ' + country + '）');
+    regionsLoading = true;
+    updateSubmitButtonState();
     showRegionPlaceholder('form-region-loading', '載入中...');
 
     try {
@@ -775,6 +858,9 @@ async function loadRegionOptions(country = 'TW') {
     } catch (error) {
         console.error('❌ 載入評估地點錯誤:', error);
         renderRegionCards(getDefaultRegions(country));
+    } finally {
+        regionsLoading = false;
+        updateSubmitButtonState();
     }
 }
 
