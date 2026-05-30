@@ -814,7 +814,7 @@ function renderRegionCards(regions) {
         container.appendChild(btn);
     });
 
-    if (validRegions.length === 1) {
+    if (validRegions.length > 0) {
         const firstBtn = container.querySelector('.option-card');
         selectRegionCard(firstBtn);
     } else {

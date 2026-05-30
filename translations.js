@@ -3,7 +3,7 @@ const translations = {
     // 繁體中文（默認）
     'zh-TW': {
         // 頂部橫幅
-        'countdown-banner-text': '⚡  限時線上報名！截止時間僅剩',
+        'countdown-banner-text': '⚡ 限時報名！截止時間僅剩',
         
         // Hero Section
         'main-headline': '別再等機會，用AI創造機會！',
@@ -139,7 +139,7 @@ const translations = {
     
     // 简体中文
     'zh-CN': {
-        'countdown-banner-text': '⚡ 限时在线报名！截止时间仅剩',
+        'countdown-banner-text': '⚡ 限时报名！截止时间仅剩',
         'main-headline': '别再等机会，用AI创造机会！',
         'feature-1': '✅ 用AI与自媒体，打造属于你的事业系统！',
         'feature-2': '✅ 从零开始，用AI开启你的创业人生！',
@@ -253,7 +253,7 @@ const translations = {
     
     // English
     'en': {
-        'countdown-banner-text': '⚡ Limited Time Online Registration! Time Remaining',
+        'countdown-banner-text': '⚡ Limited Time Registration! Time Remaining',
         'main-headline': 'Stop Waiting for Opportunities, Create Them with AI!',
         'feature-1': '✅ Build Your Own Business System with AI & Social Media!',
         'feature-2': '✅ Start from Zero, Launch Your Entrepreneurial Journey with AI!',
