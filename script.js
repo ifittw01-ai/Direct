@@ -295,7 +295,7 @@ function showSuccessPage(userName, userRegion) {
                         💬 透過 LINE 聯繫
                     </h4>
                     <div class="qr-code-container" style="background: white; padding: 20px; border-radius: 10px; display: inline-block; margin-bottom: 10px;">
-                        <img src="https://ifittw01-ai.github.io/AI-PT/data/line-qrcode.png.jpg?v=20260629" alt="LINE QR Code" style="width: 180px; height: 180px; display: block;" onerror="this.style.display='none'; this.parentElement.innerHTML='<p style=color:#666;padding:20px>QR Code 載入中...</p>'">
+                        <img src="https://ifittw01-ai.github.io/AI-PT/data/line-qrcode.png?v=20260629b" alt="LINE QR Code" style="width: 180px; height: 180px; display: block;" onerror="this.style.display='none'; this.parentElement.innerHTML='<p style=color:#666;padding:20px>QR Code 載入中...</p>'">
                     </div>
                     <p style="color: white; font-size: 0.9rem; opacity: 0.95; margin-top: 10px;">
                         掃描 QR Code 加入 LINE<br>
