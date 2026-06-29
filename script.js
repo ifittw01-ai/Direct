@@ -290,7 +290,7 @@ function showSuccessPage(userName, userRegion) {
                 <h3 style="color: #333; margin-bottom: 20px; font-size: 1.3rem; text-align: center;">🎉 立即聯繫我們</h3>
                 
                 <!-- LINE 區塊 -->
-                <div class="contact-section" style="background: linear-gradient(135deg, #06C755 0%, #00B900 100%); padding: 25px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(6, 199, 85, 0.3);">
+                <div class="contact-section" style="background: linear-gradient(135deg, #06C755 0%, #00B900 100%); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(6, 199, 85, 0.3);">
                     <h4 style="color: white; margin-bottom: 15px; font-size: 1.1rem;">
                         💬 透過 LINE 聯繫
                     </h4>
@@ -303,25 +303,8 @@ function showSuccessPage(userName, userRegion) {
                     </p>
                 </div>
                 
-                <!-- WhatsApp 區塊 -->
-                <div class="contact-section" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
-                    <h4 style="color: white; margin-bottom: 15px; font-size: 1.1rem;">
-                        📱 透過 WhatsApp 聯繫
-                    </h4>
-                    <a href="https://wa.me/886975497841?text=${encodeURIComponent('您好，我是 ' + userName + '，已填寫表單，想了解AI+自媒體創業系統')}" 
-                       target="_blank"
-                       style="display: inline-block; background: white; color: #128C7E; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;"
-                       onmouseover="this.style.transform='scale(1.05)'"
-                       onmouseout="this.style.transform='scale(1)'">
-                        🟢 立即開啟 WhatsApp
-                    </a>
-                    <p style="color: white; font-size: 0.85rem; opacity: 0.9; margin-top: 15px;">
-                        點擊按鈕將自動開啟 WhatsApp 對話
-                    </p>
-                </div>
-                
                 <p style="color: #666; font-size: 0.9rem; text-align: center; margin-top: 20px;">
-                    ⚡ 選擇您方便的聯繫方式，我們將立即為您服務
+                    ⚡ 掃描 LINE QR Code，我們將立即為您服務
                 </p>
             </div>
             
@@ -539,7 +522,7 @@ function initOrderForm() {
                 resetOrderFormAfterSubmit();
             } else {
                 console.error('❌ 提交失敗:', result.message);
-                alert('❌ 提交失敗，請稍後再試或直接聯繫我們的 WhatsApp/LINE\n\n錯誤: ' + result.message);
+                alert('❌ 提交失敗，請稍後再試或直接透過 LINE 聯繫我們\n\n錯誤: ' + result.message);
             }
         } catch (error) {
             console.error('⚠️ 提交錯誤:', error);
