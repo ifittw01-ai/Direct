@@ -13,6 +13,11 @@ const SHEET_NAME_REGIONS = '評估地點';    // 评估地点工作表
 const SHEET_NAME_CUSTOMERS = '客戶報名記錄';  // 客户报名记录工作表
 const DEFAULT_EMAIL = 'jordantsai777@gmail.com';
 const CACHE_DURATION = 600;  // 缓存时间（秒）- 10 分钟
+const CUSTOMER_HEADERS = [
+  '報名時間', '客戶姓名', '電話號碼', '電子郵件',
+  '國家地區', '行業', '評估地點',
+  'LINE ID', 'WhatsApp', '推廣代碼'
+];
 
 // ========================================
 // 从 Google Sheet 读取推广人员信息（含缓存）
@@ -141,34 +146,28 @@ function saveCustomerToSheet(customerData) {
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
     let sheet = spreadsheet.getSheetByName(SHEET_NAME_CUSTOMERS);
     
-    // 如果工作表不存在，创建它并添加标题行
+    // 如果工作表不存在，创建它
     if (!sheet) {
       Logger.log('📝 创建新工作表: ' + SHEET_NAME_CUSTOMERS);
       sheet = spreadsheet.insertSheet(SHEET_NAME_CUSTOMERS);
-      
-      // 添加标题行（加粗、背景色）
-      const headers = [
-        '報名時間', '客戶姓名', '電話號碼', '電子郵件', 
-        '國家地區', '行業', '評估地區', 
-        'LINE ID', 'WhatsApp', '訂閱電子報',
-        '推廣代碼', '推廣人員姓名', '推廣人員郵箱'
-      ];
-      
-      sheet.appendRow(headers);
-      
-      // 设置标题行格式
-      const headerRange = sheet.getRange(1, 1, 1, headers.length);
-      headerRange.setFontWeight('bold');
-      headerRange.setBackground('#4285f4');
-      headerRange.setFontColor('#ffffff');
-      
-      // 冻结标题行
       sheet.setFrozenRows(1);
-      
-      // 自动调整列宽
-      for (let i = 1; i <= headers.length; i++) {
-        sheet.autoResizeColumn(i);
-      }
+    }
+
+    // 同步標題列與欄位數，避免既有表格沿用舊欄位造成錯位
+    sheet.getRange(1, 1, 1, CUSTOMER_HEADERS.length).setValues([CUSTOMER_HEADERS]);
+
+    const extraColumns = sheet.getMaxColumns() - CUSTOMER_HEADERS.length;
+    if (extraColumns > 0) {
+      sheet.deleteColumns(CUSTOMER_HEADERS.length + 1, extraColumns);
+    }
+
+    const headerRange = sheet.getRange(1, 1, 1, CUSTOMER_HEADERS.length);
+    headerRange.setFontWeight('bold');
+    headerRange.setBackground('#4285f4');
+    headerRange.setFontColor('#ffffff');
+
+    for (let i = 1; i <= CUSTOMER_HEADERS.length; i++) {
+      sheet.autoResizeColumn(i);
     }
     
     // 添加客户数据
@@ -180,13 +179,10 @@ function saveCustomerToSheet(customerData) {
       customerData.customerEmail,     // 电子邮件
       customerData.customerCountry,   // 国家地区
       customerData.customerIndustry,  // 行业
-      customerData.customerRegion,    // 评估地区
+      customerData.customerRegion,    // 评估地点
       customerData.customerLineId,    // LINE ID
       customerData.customerWhatsapp,  // WhatsApp
-      customerData.newsletter,        // 訂閱電子報
-      customerData.refCode || '無',   // 推廣代碼
-      customerData.promoterName || 'AI+自媒體創業系統',  // 推廣人員姓名
-      customerData.targetEmail        // 推廣人員郵箱
+      customerData.refCode || '無'    // 推廣代碼
     ];
     
     sheet.appendRow(rowData);
@@ -255,7 +251,6 @@ function doPost(e) {
     const customerRegion = params['評估地區'] || '';
     const customerLineId = params['LINE_ID'] || params['LINE ID'] || '未提供';
     const customerWhatsapp = params['WhatsApp號碼'] || params['WhatsApp'] || '未提供';
-    const newsletter = params['訂閱電子報'] === 'on' ? '是' : '否';
     
     Logger.log('📧 准备发送邮件...');
     Logger.log('推广代码: ' + refCode);
@@ -275,10 +270,7 @@ function doPost(e) {
       customerRegion: customerRegion,
       customerLineId: customerLineId,
       customerWhatsapp: customerWhatsapp,
-      newsletter: newsletter,
-      refCode: refCode,
-      targetEmail: promoterInfo.email,
-      promoterName: promoterInfo.name
+      refCode: refCode
     };
     
     saveCustomerToSheet(customerData);
@@ -299,7 +291,6 @@ function doPost(e) {
 評估地區：${customerRegion}
 LINE ID：${customerLineId}
 WhatsApp：${customerWhatsapp}
-訂閱電子報：${newsletter}
 
 推廣代碼：${refCode || '無（預設）'}
 
@@ -373,9 +364,7 @@ AI+自媒體創業系統 團隊
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
-      message: '提交成功！',
-      targetEmail: promoterInfo.email,
-      promoterName: promoterInfo.name
+      message: '提交成功！'
     })).setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {

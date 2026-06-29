@@ -207,14 +207,14 @@ function updateRegionCount(regionId) {
 // ========================================
 // 根據推廣代碼獲取目標郵箱
 // ========================================
-function getTargetEmail(refCode) {
+function getNotificationEmail(refCode) {
   const emailMapping = getEmailMapping();
-  const targetEmail = emailMapping[refCode] || DEFAULT_EMAIL;
+  const notificationEmail = emailMapping[refCode] || DEFAULT_EMAIL;
   
   Logger.log('🔍 推廣代碼: ' + (refCode || '無'));
-  Logger.log('📧 目標郵箱: ' + targetEmail);
+  Logger.log('📧 目標郵箱: ' + notificationEmail);
   
-  return targetEmail;
+  return notificationEmail;
 }
 
 // ========================================
@@ -265,7 +265,7 @@ function doPost(e) {
     
     // 獲取推廣代碼和目標郵箱
     const refCode = params.ref || params['推廣代碼'] || '';
-    const targetEmail = getTargetEmail(refCode);
+    const notificationEmail = getNotificationEmail(refCode);
     
     // 獲取客戶資料
     const customerName = params['姓名'] || '';
@@ -277,11 +277,10 @@ function doPost(e) {
     const customerRegionId = params['評估地區ID'] || '';  // 新增：地區ID
     const customerLineId = params['LINE_ID'] || params['LINE ID'] || '未提供';
     const customerWhatsapp = params['WhatsApp號碼'] || params['WhatsApp'] || '未提供';
-    const newsletter = params['訂閱電子報'] === 'on' ? '是' : '否';
     
     Logger.log('📧 準備發送郵件...');
     Logger.log('推廣代碼: ' + refCode);
-    Logger.log('目標郵箱: ' + targetEmail);
+    Logger.log('目標郵箱: ' + notificationEmail);
     Logger.log('客戶姓名: ' + customerName);
     Logger.log('客戶郵箱: ' + customerEmail);
     Logger.log('客戶電話: ' + customerPhone);
@@ -313,7 +312,6 @@ function doPost(e) {
 評估地區：${customerRegion}
 LINE ID：${customerLineId}
 WhatsApp：${customerWhatsapp}
-訂閱電子報：${newsletter}
 
 推廣代碼：${refCode || '無（預設）'}
 
@@ -334,11 +332,11 @@ AI+自媒體創業系統
     
     try {
       MailApp.sendEmail({
-        to: targetEmail,
+        to: notificationEmail,
         subject: promoterSubject,
         body: promoterBody
       });
-      Logger.log('✅ 已發送郵件給推廣人員: ' + targetEmail);
+      Logger.log('✅ 已發送郵件給推廣人員: ' + notificationEmail);
     } catch (error) {
       Logger.log('❌ 發送推廣人員郵件失敗: ' + error);
     }
@@ -380,8 +378,7 @@ AI+自媒體創業系統 團隊
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
-      message: '提交成功！',
-      targetEmail: targetEmail
+      message: '提交成功！'
     })).setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {

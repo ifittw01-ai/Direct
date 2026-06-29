@@ -271,7 +271,6 @@
                         <th>評估地區</th>
                         <th>LINE ID</th>
                         <th>WhatsApp</th>
-                        <th>訂閱電子報</th>
                         <th>建立時間</th>
                         <th>操作</th>
                     </tr>
@@ -334,7 +333,6 @@
                     <td>${getRegionName(item.region)}</td>
                     <td>${escapeHtml(item.lineId || '未提供')}</td>
                     <td>${escapeHtml(item.whatsapp || '未提供')}</td>
-                    <td>${item.newsletter ? '是' : '否'}</td>
                     <td>${formatDateTime(item.createdAt)}</td>
                     <td>
                         <button class="action-btn" onclick="deleteItem(${item.id})">
@@ -365,7 +363,6 @@
                 '評估地區': getRegionName(item.region),
                 'LINE ID': item.lineId || '未提供',
                 'WhatsApp': item.whatsapp || '未提供',
-                '訂閱電子報': item.newsletter ? '是' : '否',
                 '建立時間': formatDateTime(item.createdAt)
             }));
 
@@ -383,7 +380,6 @@
                 { wch: 12 }, // 評估地區
                 { wch: 18 }, // LINE ID
                 { wch: 18 }, // WhatsApp
-                { wch: 12 }, // 訂閱
                 { wch: 20 }  // 時間
             ];
 

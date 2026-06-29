@@ -338,14 +338,14 @@
             
             const testData = new FormData();
             testData.append('姓名', '测试用户');
-            testData.append('电子邮件', 'test@example.com');
-            testData.append('电话号码', '0912345678');
-            testData.append('国家地区', '台湾');
-            testData.append('行业', '教育 / 培训');
-            testData.append('评估地区', '测试地区');
+            testData.append('電子郵件', 'test@example.com');
+            testData.append('電話號碼', '0912345678');
+            testData.append('國家地區', '台灣');
+            testData.append('行業', '教育 / 培訓');
+            testData.append('評估地區', '測試地區');
             testData.append('LINE_ID', 'test_line');
-            testData.append('WhatsApp号码', '0912345678');
-            testData.append('推广代码', '001');
+            testData.append('WhatsApp號碼', '0912345678');
+            testData.append('推廣代碼', '001');
             testData.append('ref', '001');
             
             try {
@@ -358,7 +358,7 @@
                 
                 if (result.success) {
                     showResult('success', '✅ 表单提交成功！', 
-                        `响应信息: ${result.message}\n目标邮箱: ${result.targetEmail || '未知'}\n\n请检查：\n1. Google Sheet 是否有新数据\n2. 推广人员是否收到邮件\n3. 测试邮箱是否收到确认邮件`);
+                        `响应信息: ${result.message}\n\n请检查：\n1. Google Sheet 是否有新数据\n2. 推广人员是否收到邮件\n3. 测试邮箱是否收到确认邮件`);
                 } else {
                     showResult('error', '❌ 表单提交失败', 
                         `错误信息: ${result.message}\n\n完整响应:\n${JSON.stringify(result, null, 2)}`);

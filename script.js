@@ -75,42 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ========================================
-// 推廣人員郵箱對照表
-// ========================================
-// 在 email-mapping.html 生成代碼後，將代碼貼在這裡
-const EMAIL_MAPPING = {
-    // 範例：
-    // 'A': 'userA@gmail.com',
-    // 'B': 'userB@gmail.com',
-    "jordantsai777": "jordantsai777@gmail.com",
-    "jordantsai07": "jordantsai07@gmail.com",
-    "001": "cchaha888@gmail.com",
-    "002": "a0928127137@gmail.com",
-    "003": "peter.w2520701@gmail.com",
-    "005": "gabi4507@gmail.com",
-    "006": "h0917995529@gmail.com",
-    "008": "rong20020804@gmail.com",
-    "009": "amy75301@gmail.com",
-    "010": "sasabreakfast@gmail.com"
-};
-
-// 預設郵箱（如果沒有 ref 參數）
-const DEFAULT_EMAIL = 'jordantsai777@gmail.com';
-
 // 從 URL 獲取推廣代碼
 function getReferralCode() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('ref');
-}
-
-// 根據推廣代碼獲取對應郵箱
-function getTargetEmail() {
-    const refCode = getReferralCode();
-    const email = EMAIL_MAPPING[refCode] || DEFAULT_EMAIL;
-    console.log('📧 推廣代碼:', refCode || '無');
-    console.log('📧 目標郵箱:', email);
-    return email;
 }
 
 // ========================================
@@ -130,8 +98,7 @@ const DEFAULT_GOOGLE_FORM_CONFIG = {
         industry: 'entry.828038711',
         region: 'entry.1586436660',
         lineId: 'entry.1922861190',
-        whatsapp: 'entry.1017645638',
-        newsletter: 'entry.1980319875'
+        whatsapp: 'entry.1017645638'
     }
 };
 
@@ -467,11 +434,6 @@ async function submitToGoogleForm(data) {
             formData.append(GOOGLE_FORM_CONFIG.fields.whatsapp, data.whatsapp);
         }
         
-        // 訂閱電子報（核取方塊）- 只有勾選時才傳送
-        if (GOOGLE_FORM_CONFIG.fields.newsletter && data.newsletter) {
-            formData.append(GOOGLE_FORM_CONFIG.fields.newsletter, '是');
-        }
-        
         console.log('📤 正在提交資料到 Google 表單...');
         console.log('表單 URL:', formUrl);
         
@@ -524,12 +486,10 @@ function initOrderForm() {
         // 獲取用戶名稱
         const userName = form.querySelector('[name="姓名"]').value;
         
-        // 🎯 添加推廣代碼到表單（Google Script 會根據此判斷目標郵箱）
+        // 🎯 添加推廣代碼到表單（Google Script 會根據此判斷通知郵箱）
         const refCode = getReferralCode();
-        const targetEmail = getTargetEmail();
         
         console.log('🔖 推廣代碼:', refCode || '無');
-        console.log('📧 目標郵箱:', targetEmail);
         
         // 準備表單資料
         const formData = new FormData(form);
@@ -572,7 +532,7 @@ function initOrderForm() {
             const result = await response.json();
             
             if (result.success) {
-                console.log('✅ 提交成功！郵件已發送到:', result.targetEmail || targetEmail);
+                console.log('✅ 提交成功！');
                 
                 // 顯示成功頁面
                 showSuccessPage(userName, userRegion);

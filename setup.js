@@ -14,7 +14,6 @@ const DEFAULT_CONFIG = {
         phone: 'entry.51167075',
         country: 'entry.251150813',
         industry: 'entry.828038711',
-        newsletter: 'entry.1980319875',
         region: 'entry.1586436660',
         lineId: 'entry.1922861190',
         whatsapp: 'entry.1017645638'
@@ -49,7 +48,6 @@ function loadConfiguration() {
         document.getElementById('fieldPhone').value = config.fields.phone;
         document.getElementById('fieldCountry').value = config.fields.country;
         document.getElementById('fieldIndustry').value = config.fields.industry;
-        document.getElementById('fieldNewsletter').value = config.fields.newsletter;
         
         // 新增字段（選填）
         if (config.fields.region) {
@@ -85,8 +83,7 @@ document.getElementById('setupForm').addEventListener('submit', (e) => {
                 email: document.getElementById('fieldEmail').value.trim(),
                 phone: document.getElementById('fieldPhone').value.trim(),
                 country: document.getElementById('fieldCountry').value.trim(),
-                industry: document.getElementById('fieldIndustry').value.trim(),
-                newsletter: document.getElementById('fieldNewsletter').value.trim()
+                industry: document.getElementById('fieldIndustry').value.trim()
             }
         };
         
@@ -144,7 +141,7 @@ function validateConfiguration(config) {
     }
     
     // 檢查所有 fields
-    const requiredFields = ['fullName', 'email', 'phone', 'country', 'industry', 'newsletter'];
+    const requiredFields = ['fullName', 'email', 'phone', 'country', 'industry'];
     for (const field of requiredFields) {
         if (!config.fields[field] || !config.fields[field].startsWith('entry.')) {
             showStatus(`❌ ${field} 欄位的 Entry ID 格式不正確（應該以 entry. 開頭）`, 'error');
@@ -173,7 +170,6 @@ async function testConfiguration() {
             phone: document.getElementById('fieldPhone').value.trim(),
             country: document.getElementById('fieldCountry').value.trim(),
             industry: document.getElementById('fieldIndustry').value.trim(),
-            newsletter: document.getElementById('fieldNewsletter').value.trim(),
             region: document.getElementById('fieldRegion').value.trim(),
             lineId: document.getElementById('fieldLineId').value.trim(),
             whatsapp: document.getElementById('fieldWhatsApp').value.trim()
@@ -195,7 +191,6 @@ async function testConfiguration() {
         formData.append(fields.phone, '+886912345678');
         formData.append(fields.country, '台灣');
         formData.append(fields.industry, '其他');
-        formData.append(fields.newsletter, '是');
         
         // 添加選填字段測試資料
         if (fields.region) {
