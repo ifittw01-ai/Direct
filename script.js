@@ -350,7 +350,7 @@ function initModal() {
 // ========================================
 
 // Google Apps Script 部署 URL（全局变量）
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-SRUPX2o3Lb0c953ohR7B6IzUdZ-vFYfzcbqkPZ_mujLMmsAWoBxTbWxAHiKcPnQt/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXER_dDeDD5a6z-gsbkXKScuXLvIXq3WhKUjJTJqOBAXcRB_bGE_0tkKKG9jQu9Ey7kA/exec';
 
 // LocalStorage 資料管理
 const STORAGE_KEY = 'customerLeads';

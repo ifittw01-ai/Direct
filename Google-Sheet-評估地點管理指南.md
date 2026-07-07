@@ -18,7 +18,7 @@
 
 打開網址：
 ```
-https://docs.google.com/spreadsheets/d/1YUeS99x4qoSX3A216en65AQJEcADUCPCXY6hAnEEKcg/edit
+https://docs.google.com/spreadsheets/d/1vFBIC47zfEysQTALJYOM5tMGvAhp47XRMHT4qkQNGQo/edit
 ```
 
 ### 1.2 新增工作表
@@ -208,7 +208,7 @@ https://docs.google.com/spreadsheets/d/1YUeS99x4qoSX3A216en65AQJEcADUCPCXY6hAnEE
 找到第 22 行，確認 SPREADSHEET_ID 是你的 Google Sheet ID：
 
 ```javascript
-const SPREADSHEET_ID = '1YUeS99x4qoSX3A216en65AQJEcADUCPCXY6hAnEEKcg';
+const SPREADSHEET_ID = '1vFBIC47zfEysQTALJYOM5tMGvAhp47XRMHT4qkQNGQo';
 ```
 
 ### 3.4 部署為網頁應用程式

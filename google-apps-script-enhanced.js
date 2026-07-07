@@ -10,7 +10,7 @@
 // ========================================
 // 配置設定
 // ========================================
-const SPREADSHEET_ID = '1YUeS99x4qoSX3A216en65AQJEcADUCPCXY6hAnEEKcg';  // ⚠️ 請修改為你的 Google Sheet ID
+const SPREADSHEET_ID = '1vFBIC47zfEysQTALJYOM5tMGvAhp47XRMHT4qkQNGQo';  // ⚠️ 請修改為你的 Google Sheet ID
 const SHEET_NAME_PROMOTERS = '推廣人員';  // 推廣人員工作表
 const SHEET_NAME_REGIONS = '評估地點';    // 評估地點工作表
 const DEFAULT_EMAIL = 'jordantsai777@gmail.com';

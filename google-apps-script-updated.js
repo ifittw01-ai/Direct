@@ -19,7 +19,7 @@
 // ⚠️ 請將下方的 SPREADSHEET_ID 改為你的 Google Sheet ID
 // 如何取得？打開你的 Google Sheet，網址中的長串英數字即為 ID
 // 例如：https://docs.google.com/spreadsheets/d/【這裡就是ID】/edit
-const SPREADSHEET_ID = '1YUeS99x4qoSX3A216en65AQJEcADUCPCXY6hAnEEKcg';  // ⚠️ 必須修改
+const SPREADSHEET_ID = '1vFBIC47zfEysQTALJYOM5tMGvAhp47XRMHT4qkQNGQo';  // ⚠️ 必須修改
 const SHEET_NAME = '推廣人員';  // Sheet 分頁名稱（第1個頁簽）
 const DEFAULT_EMAIL = 'jordantsai777@gmail.com';  // 預設郵箱（找不到推廣代碼時使用）
 const CACHE_DURATION = 600;  // 緩存時間（秒）- 10 分鐘
