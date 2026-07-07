@@ -341,7 +341,7 @@ WhatsApp：${customerWhatsapp}
 祝您成交順利！🎉
 
 ---
-AI+自媒體創業系統
+直球對決
 自動通知系統
     `.trim();
     
@@ -360,7 +360,7 @@ AI+自媒體創業系統
     // 3. 發送確認郵件給報名客戶
     // ========================================
     if (customerEmail) {
-      const customerSubject = `感謝您報名「AI+自媒體創業系統」`;
+      const customerSubject = `感謝您報名「直球對決」`;
       
       // 準備地區信息顯示
       const regionInfo = customerRegion ? `\n\n記得您的時間與地址：${customerRegion}` : '';
@@ -368,7 +368,7 @@ AI+自媒體創業系統
       const customerBody = `
 ${customerName}，
 
-感謝您對「AI+自媒體創業系統」有興趣！${regionInfo}
+感謝您對「直球對決」有興趣！${regionInfo}
 
 歡迎您的到來！
 
@@ -380,7 +380,7 @@ ${customerName}，
 我們期待與您在社群中見面，一起探索 AI 創業的無限可能！🚀
 
 ---
-AI+自媒體創業系統 團隊
+直球對決 團隊
       `.trim();
       
       try {
